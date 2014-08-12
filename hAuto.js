@@ -18,7 +18,7 @@
                     $scope.$apply();
                     break;
                 case 13:
-                    $scope.selectItem();
+                    $scope.selectItem($scope.$curIndex);
                     $scope.$apply();
                     break;
             }
@@ -42,20 +42,58 @@
         return {
             restrict: 'AE',
             scope: {
-                'inputClass': '@',
-                'listClass': '@',
-                'itemClass': '@',
-                'items': '=',
-                'itemSelect': '&'
+                'initItems': '=',
+                'itemSelect': '&',
+                'lazyLoad': '&'
             },
             link: function($scope, element, attrs) {
                 var winEl = angular.element(window);
+                var binded = false;
+                var promise;
+                $scope.loading = false;
 
                 var handler = keyBoardHandler($scope);
 
                 var reset = function() {
                     $scope.$curIndex = -1;
                     $scope.list = [];
+                };
+
+                var bindHandler = function() {
+                    if (!binded) {
+                        winEl.on('keyup', handler);
+                        winEl.on('keydown', disablePointerHandler);
+                        binded = true;
+                    }
+                };
+
+                var unbindHandler = function() {
+                    winEl.off('keyup', handler);
+                    winEl.off('keydown', disablePointerHandler);
+                    binded = false;
+                };
+
+                var filtering = function(items) {
+                    if (!$scope.searchTxt) {
+                        $scope.list = [];
+                    } else {
+                        $scope.list = $filter('filter')(items, $scope.searchTxt);
+                    }
+                    var inputEl = element.find('input');
+                    $timeout(function() {
+                        element.find('div').css({
+                            'position': 'absolute',
+                            'width': inputEl.prop('offsetWidth') + 'px'
+                        });
+                    });
+
+                    bindHandler();
+                };
+
+                var lazyDataHandler = function(data) {
+                    filtering(data);
+                    $scope.loading = false;
+                    $scope.$apply();
                 };
 
                 reset();
@@ -72,44 +110,74 @@
                     }
                 };
 
-                $scope.selectItem = function() {
-                    if ($scope.$curIndex < 0) {
+                $scope.selectItem = function(index, $event) {
+                    if (index < 0) {
+                        if ($event) {
+                            $event.preventDefault();
+                            $event.stopPropagation();
+                        }
                         return;
                     }
-                    if ($scope.itemSelect && $scope.itemSelect.call) {
-                        var item = $scope.list[$scope.$curIndex];
+                    var item = $scope.list[index];
+                    if (attrs.itemSelect) {
                         $scope.itemSelect({
                             item: item,
-                            index: $scope.$curIndex
+                            index: index
                         });
-                        $scope.searchTxt = item;
-                        reset();
                     }
+                    $scope.searchTxt = item;
+                    $scope.selected = true;
+                    if ($event) {
+                        $event.preventDefault();
+                        $event.stopPropagation();
+                    }
+
                 };
 
                 $scope.$watch('searchTxt', function(newValue, oldValue) {
-                    if (!newValue) {
+                    if (!newValue || $scope.selected) {
                         reset();
-                        winEl.off('keyup', handler);
-                        winEl.off('keydown', disablePointerHandler);
+                        unbindHandler();
+                        if ($scope.selected) {
+                            $scope.selected = false;
+                        }
                         return;
                     }
 
-                    $scope.list = $filter('filter')($scope.items, $scope.searchTxt);
-                    var inputEl = element.find('input');
-                    $timeout(function() {
-                        element.find('div').css({
-                            'position': 'absolute',
-                            'width': inputEl.prop('offsetWidth') + 'px'
+                    if (attrs.lazyLoad) {
+                        if (promise) {
+                            $timeout.cancel([promise]);
+                        }
+                        reset();
+                        $scope.loading = true;
+                        $timeout(function() {
+                            var inputEl = element.find('input');
+                            element.find('div').css({
+                                'position': 'absolute',
+                                'width': inputEl.prop('offsetWidth') + 'px'
+                            });
                         });
-                    });
 
-                    winEl.on('keyup', handler);
-                    winEl.on('keydown', disablePointerHandler);
+                        promise = $timeout(function() {
+                            $scope.lazyLoad({
+                                handler: lazyDataHandler
+                            });
+                        }, 1000);
+
+                        return;
+                    }
+
+                    filtering($scope.initItems);
+
+                });
+
+
+                $scope.$on('$destroy', function() {
+                    unbindHandler();
                 });
 
             },
-            template: '<input type="text" class="{{inputClass}}" ng-model="searchTxt"/><div ng-if="list.length !== 0" class="{{listClass}}"><a ng-repeat="li in list" class="{{itemClass}}" ng-class="{active: $index === $curIndex}">{{li}}</a></div>'
+            template: '<input type="text" class="form-control" ng-model="searchTxt"/><div class="text-center" ng-if="loading"><i class="fa fa-spinner fa-spin fa-lg"></i></div><div ng-if="list.length !== 0" class="list-group"><a ng-repeat="li in list" class="list-group-item" href ng-click="selectItem($index, $event);" ng-class="{active: $index === $curIndex}">{{li}}</a></div>'
         };
     };
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>DEMO</title>
     <link rel="stylesheet" type="text/css" href="bower/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/demo.css">
     <script type="text/javascript" src="bower/angular/angular.js"></script>
     <script type="text/javascript" src="libs/hAuto.js"></script>
@@ -14,7 +15,7 @@
         <div class="panel panel-success">
             <div class="panel-heading">Auto Complete Demo</div>
             <div class="panel-body" ng-controller="DemoController">
-                <h-auto items="data" item-select="onSelect(item, index)" input-class="form-control" list-class="list-group" item-class="list-group-item" item-active-class="active"></h-auto>
+                <h-auto lazy-load="loading(handler)" init-items="data" item-select="onSelect(item, index)"></h-auto>
             </div>
          </div>
     </div>
