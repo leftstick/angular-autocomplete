@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <title>DEMO</title>
     <link rel="stylesheet" type="text/css" href="bower/bootstrap/dist/css/bootstrap.min.css">
-    <script type="text/javascript" src="bower/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="bower/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="bower/angular/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/demo.css">
+    <script type="text/javascript" src="bower/angular/angular.js"></script>
     <script type="text/javascript" src="libs/hAuto.js"></script>
 </head>
 <body>
     
-    <h-auto ng-model="name"></h-auto>
-
+    <div class="container">
+        <div class="panel panel-success">
+            <div class="panel-heading">Auto Complete Demo</div>
+            <div class="panel-body" ng-controller="DemoController">
+                <h-auto items="data" item-select="onSelect(item, index)" input-class="form-control" list-class="list-group" item-class="list-group-item" item-active-class="active"></h-auto>
+            </div>
+         </div>
+    </div>
 </body>
 <script type="text/javascript" src="libs/demo.js"></script>
 </html>
