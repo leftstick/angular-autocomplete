@@ -1,0 +1,29 @@
+{
+  "name": "angular-autocomplete",
+  "version": "1.0.0",
+  "description": "Autocomplete directive works for you",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leftstick/angular-autocomplete.git"
+  },
+  "keywords": [
+    "ordering"
+  ],
+  "author": {
+    "name": "Howard.Zuo",
+    "email": "leftstick@qq.com",
+    "url": "https://github.com/leftstick"
+  },
+  "contributors": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leftstick/angular-autocomplete/issues"
+  },
+  "homepage": "https://github.com/leftstick/angular-autocomplete",
+  "dependencies": {
+    "gulp": "^3.8.7"
+  },
+  "devDependencies": {
+    "gulp-webserver": "^0.6.0"
+  }
+}
