@@ -81,6 +81,7 @@
                 var winEl = angular.element(window);
                 var binded = false;
                 var promise;
+                //set loading with falsy since not need to display spinner at the begining
                 $scope.loading = false;
                 assignOpts($scope, 'inputClass', inputClass);
                 assignOpts($scope, 'spinnerClass', spinnerClass);
