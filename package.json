@@ -20,7 +20,7 @@
     "url": "https://github.com/leftstick/angular-autocomplete/issues"
   },
   "scripts": {
-    "build": "gulp default",
+    "build": "gulp default"
   },
   "homepage": "https://github.com/leftstick/angular-autocomplete",
   "devDependencies": {
