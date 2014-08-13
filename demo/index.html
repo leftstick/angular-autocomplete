@@ -13,9 +13,31 @@
     
     <div class="container">
         <div class="panel panel-success">
-            <div class="panel-heading">Auto Complete Demo</div>
-            <div class="panel-body" ng-controller="DemoController">
-                <h-auto lazy-load="loading(handler)" init-items="data" item-select="onSelect(item, index)"></h-auto>
+            <div class="panel-heading">Basic Auto Complete Demo</div>
+            <div class="panel-body" ng-controller="BasicController">
+                <h-auto value="valueOne" init-items="data" item-select="onSelect(item, index)"></h-auto>
+                <button class="btn btn-primary" ng-click="displayValue()">Submit</button>
+            </div>
+         </div>
+         <div class="panel panel-success">
+            <div class="panel-heading">Advanced lazy-loading</div>
+            <div class="panel-body" ng-controller="LazyController">
+                <h-auto value="valueTwo" lazy-load="loading(handler)" item-select="onSelect(item, index)"></h-auto>
+                <button class="btn btn-warning" ng-click="displayValue()">show value</button>
+            </div>
+         </div>
+         <div class="panel panel-success">
+            <div class="panel-heading">specify property to display in search result</div>
+            <div class="panel-body" ng-controller="ObjectController">
+                <h-auto value="valueTwo" display-field="name" init-items="data2" item-select="onSelect(item, index)"></h-auto>
+                <button class="btn btn-danger" ng-click="displayValue()">show value</button>
+            </div>
+         </div>
+         <div class="panel panel-success">
+            <div class="panel-heading">specify formatter for each item in search result</div>
+            <div class="panel-body" ng-controller="FormatterController">
+                <h-auto value="valueTwo" display-formatter="formatter()" init-items="data2" item-select="onSelect(item, index)"></h-auto>
+                <button class="btn btn-info" ng-click="displayValue()">show value</button>
             </div>
          </div>
     </div>

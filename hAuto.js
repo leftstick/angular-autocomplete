@@ -1,9 +1,36 @@
+/**
+ * ******************************************************************************************************
+ *
+ *  angular based directive for auto-complete stuff
+ *
+ *  @author  Howard.Zuo
+ *  @date    Aug 13th, 2014
+ *
+ * ******************************************************************************************************
+ */
 (function(angular, window) {
     'use strict';
 
     if (typeof angular === 'undefined') {
         throw new Error('hAuto requires angular');
     }
+
+    //default classes for directive
+    var inputClass = 'form-control';
+    var spinnerClass = 'fa fa-spinner fa-spin fa-lg';
+    var itemsClass = 'list-group';
+    var itemClass = 'list-group-item';
+
+    //default formatter used for display object item
+    var formatter = function(item) {
+        return item;
+    };
+
+    var assignOpts = function($scope, key, defaultValue) {
+        if (!$scope[key]) {
+            $scope[key] = defaultValue;
+        }
+    };
 
 
     var keyBoardHandler = function($scope) {
@@ -38,10 +65,14 @@
 
     var hAuto = angular.module('hAuto', []);
 
+
     var hAutoDir = function($filter, $timeout) {
         return {
             restrict: 'AE',
             scope: {
+                'displayFormatter': '&',
+                'displayField': '@',
+                'value': '=',
                 'initItems': '=',
                 'itemSelect': '&',
                 'lazyLoad': '&'
@@ -51,6 +82,16 @@
                 var binded = false;
                 var promise;
                 $scope.loading = false;
+                assignOpts($scope, 'inputClass', inputClass);
+                assignOpts($scope, 'spinnerClass', spinnerClass);
+                assignOpts($scope, 'itemsClass', itemsClass);
+                assignOpts($scope, 'itemClass', itemClass);
+                assignOpts($scope, 'inputAddonTxt', '');
+                if (attrs.displayFormatter) {
+                    $scope.formatter = $scope.displayFormatter();
+                } else {
+                    $scope.formatter = formatter;
+                }
 
                 var handler = keyBoardHandler($scope);
 
@@ -73,6 +114,18 @@
                     binded = false;
                 };
 
+                var getSpecifiedDiv = function(cssName) {
+                    var children = element.children();
+                    var el;
+                    for (var i = 0; i < children.length; i++) {
+                        el = angular.element(children[i]);
+                        if (el.hasClass(cssName)) {
+                            return el;
+                        }
+                    }
+                    return;
+                };
+
                 var filtering = function(items) {
                     if (!$scope.searchTxt) {
                         $scope.list = [];
@@ -81,7 +134,7 @@
                     }
                     var inputEl = element.find('input');
                     $timeout(function() {
-                        element.find('div').css({
+                        getSpecifiedDiv($scope.itemsClass).css({
                             'position': 'absolute',
                             'width': inputEl.prop('offsetWidth') + 'px'
                         });
@@ -125,7 +178,8 @@
                             index: index
                         });
                     }
-                    $scope.searchTxt = item;
+                    $scope.value = item;
+                    $scope.searchTxt = $scope.displayField ? item[$scope.displayField] : $scope.formatter(item);
                     $scope.selected = true;
                     if ($event) {
                         $event.preventDefault();
@@ -152,7 +206,7 @@
                         $scope.loading = true;
                         $timeout(function() {
                             var inputEl = element.find('input');
-                            element.find('div').css({
+                            getSpecifiedDiv('spinner-position').css({
                                 'position': 'absolute',
                                 'width': inputEl.prop('offsetWidth') + 'px'
                             });
@@ -177,7 +231,7 @@
                 });
 
             },
-            template: '<input type="text" class="form-control" ng-model="searchTxt"/><div class="text-center" ng-if="loading"><i class="fa fa-spinner fa-spin fa-lg"></i></div><div ng-if="list.length !== 0" class="list-group"><a ng-repeat="li in list" class="list-group-item" href ng-click="selectItem($index, $event);" ng-class="{active: $index === $curIndex}">{{li}}</a></div>'
+            template: '<input type="text" ng-class="inputClass" ng-model="searchTxt"/><div class="spinner-position" ng-if="loading"><i ng-class="spinnerClass"></i></div><div ng-if="list.length !== 0" ng-class="itemsClass"><a ng-repeat="li in list" href ng-click="selectItem($index, $event);" class="{{itemClass}}" ng-class="{active: $index === $curIndex}">{{ displayField ? li[displayField] : formatter(li) }}</a></div>'
         };
     };
 
