@@ -19,8 +19,9 @@
                 alert(item + ' is selected! and index is = ' + index);
             };
 
-            $scope.loading = function(handler) {
+            $scope.loading = function(handler, searchTxt) {
                 $timeout(function() {
+                    console.log('searching...', searchTxt);
                     handler($scope.data);
                 }, 1000);
             };

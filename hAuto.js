@@ -26,9 +26,11 @@
         return item;
     };
 
-    var assignOpts = function($scope, key, defaultValue) {
-        if (!$scope[key]) {
+    var assignOpts = function($scope, attrs, key, defaultValue) {
+        if (!attrs[key]) {
             $scope[key] = defaultValue;
+        } else {
+            $scope[key] = attrs[key];
         }
     };
 
@@ -83,11 +85,11 @@
                 var promise;
                 //set loading with falsy since not need to display spinner at the begining
                 $scope.loading = false;
-                assignOpts($scope, 'inputClass', inputClass);
-                assignOpts($scope, 'spinnerClass', spinnerClass);
-                assignOpts($scope, 'itemsClass', itemsClass);
-                assignOpts($scope, 'itemClass', itemClass);
-                assignOpts($scope, 'inputAddonTxt', '');
+                assignOpts($scope, attrs, 'inputClass', inputClass);
+                assignOpts($scope, attrs, 'spinnerClass', spinnerClass);
+                assignOpts($scope, attrs, 'itemsClass', itemsClass);
+                assignOpts($scope, attrs, 'itemClass', itemClass);
+                assignOpts($scope, attrs, 'inputAddonTxt', '');
                 if (attrs.displayFormatter) {
                     $scope.formatter = $scope.displayFormatter();
                 } else {
@@ -135,10 +137,13 @@
                     }
                     var inputEl = element.find('input');
                     $timeout(function() {
-                        getSpecifiedDiv($scope.itemsClass).css({
-                            'position': 'absolute',
-                            'width': inputEl.prop('offsetWidth') + 'px'
-                        });
+                        var el = getSpecifiedDiv($scope.itemsClass);
+                        if (el) {
+                            el.css({
+                                'position': 'absolute',
+                                'width': inputEl.prop('offsetWidth') + 'px'
+                            });
+                        }
                     });
 
                     bindHandler();
@@ -215,7 +220,8 @@
 
                         promise = $timeout(function() {
                             $scope.lazyLoad({
-                                handler: lazyDataHandler
+                                handler: lazyDataHandler,
+                                searchTxt: newValue
                             });
                         }, 1000);
 
