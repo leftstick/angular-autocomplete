@@ -1,4 +1,4 @@
-# angular-autocomplete #
+# angular-autocomplete ![](http://img.shields.io/badge/bower_module-v1.0.0-green.svg?style=flat) #
 
 Create autocomplete component within five minutes.
 
