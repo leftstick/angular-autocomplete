@@ -52,6 +52,15 @@ demo.controller('BasicController', ['$scope', function($scope) {
 ``` 
 
 
+## `h-auto` configuration
+
+| Attribute        | Type           | Required  | Description |
+| :------------- |:-------------| :-----:| :-----|
+| init-items | array | No | initialized search items. If you need a `lazy-load` mechanism depends on user's input, leave this option |
+| item-select(item, index) | function | No | callback while you select one item from search result, and the `item` is the object/string you selected, and `index` is position of this item in this result. Note: `item` and `index` has to be defined in html, otherwise, you won't get them from controller |
+| value | string\|object | No | callback while you select one item from search result, and the `item` is the object\|string you selected, and `index` is position of this item in this result. Note: `item` and `index` has to be defined in html, otherwise, you won't get them from controller |
+
+
 
 ## LICENSE ##
 
@@ -59,7 +68,7 @@ demo.controller('BasicController', ['$scope', function($scope) {
 
 
 
-
+[expression]: https://docs.angularjs.org/guide/expression
 
 
 
