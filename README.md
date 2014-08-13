@@ -1,14 +1,36 @@
-# angular-hAuto [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
+# angular-autocomplete #
+
+Create autocomplete component within five minutes.
 
 
-Autocomplete directive works for you.
+## Requirement ##
+
+- [angularjs](http://angularjs.org/) (1.2.0+)
+
+## UI dependency(optional) ##
+
+- [bootstrapjs](http://getbootstrap.com) (3.2.0+)
+- [fontawesome](http://fontawesome.io/) (4.1.0+)
+
+## Install ##
+
+```JavaScript
+bower install angular-autocomplete --save
+```
+
+
+
+
+
+## LICENSE ##
+
+[MIT License](https://raw.githubusercontent.com/leftstick/angular-autocomplete/master/LICENSE)
 
 
 
 
 
 
-[npm-image]: http://img.shields.io/npm/v/angular-hAuto.svg
-[npm-url]: https://www.npmjs.org/package/angular-hAuto
-[travis-url]: https://travis-ci.org/craigjennings11/gulp-uglifyjs
-[travis-image]: https://travis-ci.org/craigjennings11/gulp-uglifyjs.svg?branch=master
+
+
+
