@@ -20,6 +20,7 @@ gulp.task('demo', function(cons) {
 
     gulp.src('./demo/')
         .pipe(webserver({
+            port: 8080,
             livereload: true,
             directoryListing: false,
             open: true
