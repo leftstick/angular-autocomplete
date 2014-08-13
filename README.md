@@ -35,9 +35,21 @@ bower install angular-h-autocomplete --save
 ```JavaScript
 var demo = angular.module('demo', ['hAuto']);
 ```
-
-
-
+- Use `h-auto` tag in your html
+```HTML
+<div ng-controller="BasicController">
+    <h-auto value="valueOne" init-items="data" item-select="onSelect(item, index)"></h-auto>
+</div>
+```
+- Writing `BasicController`
+```JavaScript
+demo.controller('BasicController', ['$scope', function($scope) {
+    $scope.data = ['Bhutan', 'Denmark', 'Japan', 'Bahrain', 'Tonga', 'Fang'];
+    $scope.onSelect = function(item, index) {
+        alert(item + ' is selected! and index is = ' + index);
+    };
+}]);
+``` 
 
 
 
