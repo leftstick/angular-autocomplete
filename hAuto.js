@@ -27,10 +27,8 @@
     };
 
     var assignOpts = function($scope, attrs, key, defaultValue) {
-        if (!attrs[key]) {
-            $scope[key] = defaultValue;
-        } else {
-            $scope[key] = attrs[key];
+        if (!$scope[key]) {
+            attrs.$set(key, defaultValue);
         }
     };
 
@@ -72,6 +70,10 @@
         return {
             restrict: 'AE',
             scope: {
+                'inputClass': '@',
+                'spinnerClass': '@',
+                'itemsClass': '@',
+                'itemClass': '@',
                 'displayFormatter': '&',
                 'displayField': '@',
                 'value': '=',
@@ -89,7 +91,6 @@
                 assignOpts($scope, attrs, 'spinnerClass', spinnerClass);
                 assignOpts($scope, attrs, 'itemsClass', itemsClass);
                 assignOpts($scope, attrs, 'itemClass', itemClass);
-                assignOpts($scope, attrs, 'inputAddonTxt', '');
                 if (attrs.displayFormatter) {
                     $scope.formatter = $scope.displayFormatter();
                 } else {

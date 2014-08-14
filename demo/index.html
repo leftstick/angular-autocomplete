@@ -13,30 +13,30 @@
     
     <div class="container">
         <div class="panel panel-success">
-            <div class="panel-heading">Basic Auto Complete Demo</div>
+            <div class="panel-heading">Basic Example</div>
             <div class="panel-body" ng-controller="BasicController">
-                <h-auto value="valueOne" input-class="form-control" init-items="data" item-select="onSelect(item, index)"></h-auto>
+                <h-auto value="valueOne" init-items="data" item-select="onSelect(item, index)"></h-auto>
                 <button class="btn btn-primary" ng-click="displayValue()">Submit</button>
             </div>
          </div>
          <div class="panel panel-success">
-            <div class="panel-heading">Advanced lazy-loading</div>
+            <div class="panel-heading">Basic lazy-loading</div>
             <div class="panel-body" ng-controller="LazyController">
                 <h-auto value="valueTwo" lazy-load="loading(handler,searchTxt)" item-select="onSelect(item, index)"></h-auto>
                 <button class="btn btn-warning" ng-click="displayValue()">show value</button>
             </div>
          </div>
          <div class="panel panel-success">
-            <div class="panel-heading">specify property to display in search result</div>
+            <div class="panel-heading">Handler object as search result-specify property to display</div>
             <div class="panel-body" ng-controller="ObjectController">
-                <h-auto value="valueTwo" display-field="name" init-items="data2" item-select="onSelect(item, index)"></h-auto>
+                <h-auto value="valueThree" display-field="name" init-items="data2" item-select="onSelect(item, index)"></h-auto>
                 <button class="btn btn-danger" ng-click="displayValue()">show value</button>
             </div>
          </div>
          <div class="panel panel-success">
-            <div class="panel-heading">specify formatter for each item in search result</div>
+            <div class="panel-heading">Handler object as search result-give formatter for each result</div>
             <div class="panel-body" ng-controller="FormatterController">
-                <h-auto value="valueTwo" display-formatter="formatter()" init-items="data2" item-select="onSelect(item, index)"></h-auto>
+                <h-auto value="valueFour" display-formatter="formatter()" init-items="data2" item-select="onSelect(item, index)"></h-auto>
                 <button class="btn btn-info" ng-click="displayValue()">show value</button>
             </div>
          </div>

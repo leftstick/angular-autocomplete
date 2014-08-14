@@ -27,7 +27,7 @@
             };
 
             $scope.displayValue = function() {
-                alert($scope.valueOne);
+                alert($scope.valueTwo);
             };
     }]);
 
@@ -56,7 +56,7 @@
             };
 
             $scope.displayValue = function() {
-                alert($scope.valueOne);
+                alert($scope.valueThree);
             };
     }]);
 
@@ -85,7 +85,7 @@
             };
 
             $scope.displayValue = function() {
-                alert($scope.valueOne);
+                alert($scope.valueFour);
             };
             $scope.formatter = function() {
                 return function(item) {
