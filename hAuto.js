@@ -178,6 +178,7 @@
                 };
 
                 $scope.$watch('searchTxt', function(newValue) {
+                    $scope.value = newValue;
                     if (!newValue || $scope.selected) {
                         reset();
                         unbindHandler();

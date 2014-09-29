@@ -1,4 +1,4 @@
-# angular-autocomplete ![](http://img.shields.io/badge/bower_module-v1.1.2-green.svg?style=flat) #
+# angular-autocomplete ![](http://img.shields.io/badge/bower_module-v1.1.3-green.svg?style=flat) #
 
 Create autocomplete component within five minutes.
 
@@ -62,6 +62,7 @@ demo.controller('BasicController', ['$scope', function($scope) {
 | value | string/object([expression]) | No | the selected string/object will be stored in this [expression], you can get selected item by calling `$scope.[value]` in your controller|
 | display-field | string | No | specify what property should be displayed in for each search result, only works if data from `init-items` or `lazy-load` is array of object, and `display-field` take higher priority than `display-formatter`. So if you set both those attribute in html, only `display-field` works |
 | display-formatter | function([expression]) | No | a `handler` should be returned in this function, like demo: `specify formatter for each item in search result`. And the `handler` has the `item` as only one parameter. Only works if data from `init-items` or `lazy-load` is array of object |
+| on-submit | function([expression]) | Yes | a function will be called while click the addon button |
 
 
 
