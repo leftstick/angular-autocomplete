@@ -44,6 +44,7 @@
 
     var disablePointerHandler = function(e) {
         switch (e.keyCode) {
+            case 13:
             case 38:
             case 40:
                 e.stopPropagation();
@@ -170,8 +171,17 @@
                         });
                     }
                     $scope.value = item;
-                    $scope.searchTxt = $scope.displayField ? item[$scope.displayField] : $scope.formatter(item);
+                    var newTxt = $scope.displayField ? item[$scope.displayField] : $scope.formatter(item);
                     $scope.selected = true;
+                    if ($scope.searchTxt === newTxt) {
+                        reset();
+                        unbindHandler();
+                        if ($scope.selected) {
+                            $scope.selected = false;
+                        }
+                    } else {
+                        $scope.searchTxt = newTxt;
+                    }
                     if ($event) {
                         $event.preventDefault();
                         $event.stopPropagation();
