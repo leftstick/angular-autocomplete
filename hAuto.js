@@ -46,6 +46,7 @@
         switch (e.keyCode) {
             case 38:
             case 40:
+                e.stopPropagation();
                 e.preventDefault();
                 return;
         }
