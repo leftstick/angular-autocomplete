@@ -1,6 +1,6 @@
 {
   "name": "angular-autocomplete",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/leftstick/angular-autocomplete",
   "authors": [
     "Howard.Zuo <leftstick@qq.com>"
@@ -9,7 +9,11 @@
   "keywords": [
     "ordering"
   ],
-  "main": ["hAuto.js", "hAuto.min.js", "hAuto.min.js.map"],
+  "files": [
+      "hAuto.js",
+      "hAuto.min.js", 
+      "hAuto.min.js.map"
+  ],
   "license": "MIT",
   "private": false,
   "ignore": [

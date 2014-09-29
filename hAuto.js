@@ -15,23 +15,10 @@
         throw new Error('hAuto requires angular');
     }
 
-    //default classes for directive
-    var inputClass = 'form-control';
-    var spinnerClass = 'fa fa-spinner fa-spin fa-lg';
-    var itemsClass = 'list-group';
-    var itemClass = 'list-group-item';
-
     //default formatter used for display object item
-    var formatter = function(item) {
+    var defaultFormatter = function(item) {
         return item;
     };
-
-    var assignOpts = function($scope, attrs, key, defaultValue) {
-        if (!$scope[key]) {
-            attrs.$set(key, defaultValue);
-        }
-    };
-
 
     var keyBoardHandler = function($scope) {
         return function(e) {
@@ -70,12 +57,9 @@
         return {
             restrict: 'AE',
             scope: {
-                'inputClass': '@',
-                'spinnerClass': '@',
-                'itemsClass': '@',
-                'itemClass': '@',
                 'displayFormatter': '&',
                 'displayField': '@',
+                'addon': '=',
                 'value': '=',
                 'initItems': '=',
                 'itemSelect': '&',
@@ -87,14 +71,10 @@
                 var promise;
                 //set loading with falsy since not need to display spinner at the begining
                 $scope.loading = false;
-                assignOpts($scope, attrs, 'inputClass', inputClass);
-                assignOpts($scope, attrs, 'spinnerClass', spinnerClass);
-                assignOpts($scope, attrs, 'itemsClass', itemsClass);
-                assignOpts($scope, attrs, 'itemClass', itemClass);
                 if (attrs.displayFormatter) {
                     $scope.formatter = $scope.displayFormatter();
                 } else {
-                    $scope.formatter = formatter;
+                    $scope.formatter = defaultFormatter;
                 }
 
                 var handler = keyBoardHandler($scope);
@@ -118,7 +98,7 @@
                     binded = false;
                 };
 
-                var getSpecifiedDiv = function(cssName) {
+                var getElementByClass = function(cssName) {
                     var children = element.children();
                     var el;
                     for (var i = 0; i < children.length; i++) {
@@ -138,11 +118,12 @@
                     }
                     var inputEl = element.find('input');
                     $timeout(function() {
-                        var el = getSpecifiedDiv($scope.itemsClass);
+                        var el = getElementByClass('list-group');
                         if (el) {
                             el.css({
                                 'position': 'absolute',
-                                'width': inputEl.prop('offsetWidth') + 'px'
+                                'width': inputEl.prop('offsetWidth') + 'px',
+                                'z-index': '100'
                             });
                         }
                     });
@@ -195,7 +176,7 @@
 
                 };
 
-                $scope.$watch('searchTxt', function(newValue, oldValue) {
+                $scope.$watch('searchTxt', function(newValue) {
                     if (!newValue || $scope.selected) {
                         reset();
                         unbindHandler();
@@ -213,9 +194,10 @@
                         $scope.loading = true;
                         $timeout(function() {
                             var inputEl = element.find('input');
-                            getSpecifiedDiv('spinner-position').css({
+                            getElementByClass('spinner-position').css({
                                 'position': 'absolute',
-                                'width': inputEl.prop('offsetWidth') + 'px'
+                                'width': inputEl.prop('offsetWidth') + 'px',
+                                'z-index': '100'
                             });
                         });
 
@@ -233,13 +215,12 @@
 
                 });
 
-
                 $scope.$on('$destroy', function() {
                     unbindHandler();
                 });
 
             },
-            template: '<input type="text" ng-class="inputClass" ng-model="searchTxt"/><div class="spinner-position" ng-if="loading"><i ng-class="spinnerClass"></i></div><div ng-if="list.length !== 0" ng-class="itemsClass"><a ng-repeat="li in list" href ng-click="selectItem($index, $event);" class="{{itemClass}}" ng-class="{active: $index === $curIndex}">{{ displayField ? li[displayField] : formatter(li) }}</a></div>'
+            template: '<div class="input-group"><input type="text" class="form-control" ng-model="searchTxt"/><span class="input-group-addon"><i class="fa fa-search"></i></span></div><div class="spinner-position" ng-if="loading"><i class="fa fa-spinner fa-spin fa-lg"></i></div><div ng-if="list.length !== 0" class="list-group"><a ng-repeat="li in list" href ng-click="selectItem($index, $event);" class="list-group-item" ng-class="{active: $index === $curIndex}">{{ displayField ? li[displayField] : formatter(li) }}</a></div>'
         };
     };
 
