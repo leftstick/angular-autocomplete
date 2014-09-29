@@ -2,7 +2,8 @@
     'use strict';
     var demo = angular.module('demo', ['hAuto']);
 
-    demo.controller('BasicController', ['$scope', function($scope) {
+    demo.controller('BasicController', ['$scope',
+        function($scope) {
             $scope.data = ['Bhutan', 'Denmark', 'Japan', 'Bahrain', 'Tonga', 'Fang'];
             $scope.onSelect = function(item, index) {
                 alert(item + ' is selected! and index is = ' + index);
@@ -11,9 +12,15 @@
             $scope.displayValue = function() {
                 alert($scope.valueOne);
             };
-    }]);
 
-    demo.controller('LazyController', ['$scope', '$timeout', function($scope, $timeout) {
+            $scope.submit = function() {
+                alert($scope.valueOne);
+            };
+        }
+    ]);
+
+    demo.controller('LazyController', ['$scope', '$timeout',
+        function($scope, $timeout) {
             $scope.data = ['Bhutan', 'Denmark', 'Japan', 'Bahrain', 'Tonga', 'Fang'];
             $scope.onSelect = function(item, index) {
                 alert(item + ' is selected! and index is = ' + index);
@@ -29,25 +36,27 @@
             $scope.displayValue = function() {
                 alert($scope.valueTwo);
             };
-    }]);
+        }
+    ]);
 
-    demo.controller('ObjectController', ['$scope', '$timeout', function($scope, $timeout) {
+    demo.controller('ObjectController', ['$scope', '$timeout',
+        function($scope, $timeout) {
             $scope.data2 = [{
                 name: 'Bhutan',
                 size: 'big'
-                }, {
+            }, {
                 name: 'Denmark',
                 size: 'middle'
-                }, {
+            }, {
                 name: 'Japan',
                 size: 'small'
-                }, {
+            }, {
                 name: 'Bahrain',
                 size: 'huge'
-                }, {
+            }, {
                 name: 'Tonga',
                 size: 'small'
-                }, {
+            }, {
                 name: 'Fang',
                 size: 'middle'
             }];
@@ -58,25 +67,27 @@
             $scope.displayValue = function() {
                 alert($scope.valueThree);
             };
-    }]);
+        }
+    ]);
 
-    demo.controller('FormatterController', ['$scope', '$timeout', function($scope, $timeout) {
+    demo.controller('FormatterController', ['$scope', '$timeout',
+        function($scope, $timeout) {
             $scope.data2 = [{
                 name: 'Bhutan',
                 size: 'big'
-                }, {
+            }, {
                 name: 'Denmark',
                 size: 'middle'
-                }, {
+            }, {
                 name: 'Japan',
                 size: 'small'
-                }, {
+            }, {
                 name: 'Bahrain',
                 size: 'huge'
-                }, {
+            }, {
                 name: 'Tonga',
                 size: 'small'
-                }, {
+            }, {
                 name: 'Fang',
                 size: 'middle'
             }];
@@ -92,6 +103,7 @@
                     return item.name + '--' + item.size;
                 };
             };
-    }]);
+        }
+    ]);
 
 }());

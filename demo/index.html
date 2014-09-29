@@ -15,7 +15,7 @@
         <div class="panel panel-success">
             <div class="panel-heading">Basic Example</div>
             <div class="panel-body" ng-controller="BasicController">
-                <h-auto value="valueOne" init-items="data" item-select="onSelect(item, index)"></h-auto>
+                <h-auto value="valueOne" init-items="data" item-select="onSelect(item, index)" on-submit="submit()"></h-auto>
                 <button class="btn btn-primary" ng-click="displayValue()">Submit</button>
             </div>
          </div>

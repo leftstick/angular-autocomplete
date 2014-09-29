@@ -33,7 +33,7 @@ gulp.task('default', function() {
     return gulp.src('./hAuto.js')
         .pipe(sourcemaps.init())
         .pipe(rename({
-            extname: ".min.js"
+            extname: '.min.js'
         }))
         .pipe(uglify())
         .pipe(sourcemaps.write('./'))
