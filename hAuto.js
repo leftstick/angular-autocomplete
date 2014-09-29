@@ -36,6 +36,7 @@
                     $scope.$apply();
                     break;
             }
+            e.stopPropagation();
             e.preventDefault();
             return;
         };
