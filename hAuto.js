@@ -221,7 +221,7 @@
                 });
 
             },
-            template: '<div class="input-group"><input type="text" class="form-control" ng-model="searchTxt"/><span class="input-group-addon" ng-click="onSubmit($event)"><i class="fa fa-search"></i></span></div><div class="spinner-position" ng-if="loading"><i class="fa fa-spinner fa-spin fa-lg"></i></div><div ng-if="list.length !== 0" class="list-group"><a ng-repeat="li in list" href ng-click="selectItem($index, $event);" class="list-group-item" ng-class="{active: $index === $curIndex}">{{ displayField ? li[displayField] : formatter(li) }}</a></div>'
+            template: '<div class="input-group"><input type="text" class="form-control" ng-model="searchTxt"/><span class="input-group-addon btn" ng-click="onSubmit($event)"><i class="fa fa-search"></i></span></div><div class="spinner-position" ng-if="loading"><i class="fa fa-spinner fa-spin fa-lg"></i></div><div ng-if="list.length !== 0" class="list-group"><a ng-repeat="li in list" href ng-click="selectItem($index, $event);" class="list-group-item" ng-class="{active: $index === $curIndex}">{{ displayField ? li[displayField] : formatter(li) }}</a></div>'
         };
     };
 
