@@ -36,6 +36,8 @@ gulp.task('default', function() {
             extname: '.min.js'
         }))
         .pipe(uglify())
-        .pipe(sourcemaps.write('./'))
+        .pipe(sourcemaps.write('./', {
+            sourceRoot: '.'
+        }))
         .pipe(gulp.dest('./'));
 });

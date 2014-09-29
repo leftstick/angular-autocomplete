@@ -132,7 +132,9 @@
                         }
                     });
 
-                    bindHandler();
+                    if ($scope.list.length > 0) {
+                        bindHandler();
+                    }
                 };
 
                 var lazyDataHandler = function(data) {
