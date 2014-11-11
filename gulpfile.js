@@ -1,43 +1,73 @@
 'use strict';
 
 var gulp = require('gulp');
-var webserver = require('gulp-webserver');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var sourcemaps = require('gulp-sourcemaps');
 
-var copyhAuto = function() {
-    gulp.src('./hAuto.js').pipe(gulp.dest('./demo/libs/'));
+var less = function (dest, isProduction) {
+    var gulp = require('gulp');
+    var less = require('gulp-less');
+    var prefix = require('gulp-autoprefixer');
+    var rename = require('gulp-rename');
+    var sourcemap = require('gulp-sourcemaps');
+    return gulp.src('src/hAuto.less')
+        .pipe(sourcemap.init())
+        .pipe(less({
+            compress: isProduction
+        }))
+        .pipe(sourcemap.write())
+        .pipe(prefix({
+            browsers: ['last 5 versions'],
+            cascade: true
+        }))
+        .pipe(rename({
+            basename: isProduction ? 'hAuto.min' : 'hAuto'
+        }))
+        .pipe(gulp.dest(dest));
 };
 
-gulp.task('demo', function(cons) {
+gulp.task('lessDemo', function () {
+    return less('demo/', false);
+});
 
+gulp.task('lessDist', function () {
+    return less('dist/', true);
+});
 
-    copyhAuto();
-    gulp.watch('./hAuto.js', function() {
-        copyhAuto();
-    });
+gulp.task('copyDemo', function () {
+    return gulp.src('src/hAuto.js')
+        .pipe(gulp.dest('demo/'));
+});
 
-    gulp.src('./demo/')
+gulp.task('copyDist', function () {
+    return gulp.src('./src/hAuto.js')
+        .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('demo', ['lessDemo', 'copyDemo'], function () {
+    var webserver = require('gulp-webserver');
+    gulp.src('demo/')
         .pipe(webserver({
+            host: '0.0.0.0',
             port: 8080,
             livereload: true,
             directoryListing: false,
-            open: true
+            fallback: 'index.html'
         }));
-
-    cons();
 });
 
-gulp.task('default', function() {
-    return gulp.src('./hAuto.js')
+
+gulp.task('dist', ['lessDist', 'copyDist'], function () {
+    var uglify = require('gulp-uglify');
+    var sourcemaps = require('gulp-sourcemaps');
+    var rename = require('gulp-rename');
+
+    return gulp.src('./dist/hAuto.js')
         .pipe(sourcemaps.init())
         .pipe(rename({
-            extname: '.min.js'
+            basename: 'hAuto.min'
         }))
         .pipe(uglify())
         .pipe(sourcemaps.write('./', {
             sourceRoot: '.'
         }))
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('./dist/'));
 });

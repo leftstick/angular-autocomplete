@@ -9,10 +9,11 @@
   "keywords": [
     "ordering"
   ],
-  "files": [
-      "hAuto.js",
-      "hAuto.min.js", 
-      "hAuto.min.js.map"
+  "main": [
+    "dist/hAuto.js",
+    "dist/hAuto.min.js",
+    "dist/hAuto.min.js.map",
+    "dist/hAuto.min.css",
   ],
   "license": "MIT",
   "private": false,
@@ -24,10 +25,9 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.21"
+    "angular": "~1.3.2"
   },
   "devDependencies": {
-    "bootstrap": "~3.2.0",
-    "font-awesome": "~4.1.0"
+    "amazeui": "~1.0.1"
   }
 }

@@ -1,0 +1,66 @@
+@input-height: 41px;
+@input-i-bg-color: #D8D8D8;
+@item-bg-color: #fff;
+@item-selected-bg-color: #0f9ae0;
+@item-selected-color: #fff;
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('http://cdn.staticfile.org/font-awesome/4.2.0/fonts/fontawesome-webfont.eot?v=4.2.0');
+    src: url('http://cdn.staticfile.org/font-awesome/4.2.0/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('http://cdn.staticfile.org/font-awesome/4.2.0/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('http://cdn.staticfile.org/font-awesome/4.2.0/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('http://cdn.staticfile.org/font-awesome/4.2.0/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+h-auto{
+    display: table;
+    width: 100%;
+    position: relative;
+    .auto-input{
+        display: table-cell;
+        width: 100%;
+        height: @input-height;
+        line-height: @input-height;
+    }
+    .auto-input-i{
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        background-color: @input-i-bg-color;
+        cursor: pointer;
+        &:before{
+            content: "\f002";
+            font-weight: 400;
+            font-style: normal;
+            vertical-align: baseline;
+            line-height: 1;
+            font-family: FontAwesome !important;
+        }
+    }
+
+    .auto-dropdown{
+        position: absolute;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        left: 0;
+        top: @input-height;
+        width: 100%;
+        z-index: 10;
+        li{
+            background-color: @item-bg-color;
+            padding: 5px 15px;
+            font-size: 14px;
+            line-height: 31px;
+            margin-bottom: -1px;
+            &:hover{
+                background-color: @item-selected-bg-color;
+                color: @item-selected-color;
+                cursor: pointer;
+            }
+            &:last-child {
+                border-bottom-right-radius: 4px;
+                border-bottom-left-radius: 4px;
+            }
+        }
+    }
+}
